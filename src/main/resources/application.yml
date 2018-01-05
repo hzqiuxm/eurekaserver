@@ -1,0 +1,18 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  # 每个Eureka server 也是一个client 所以把client相关配置关闭掉，只作为服务使用
+  client:
+    # 只作为服务端
+    registerWithEureka: false
+    # 不需要同其他的注册中心同步信息
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  # 关闭注册中心的保护模式，如果90秒收不到心跳信息，将销毁某个注册者信息,
+  # 开启保护模式时，即使服务提供者宕机或无法提供服务，注册中心仍然会保留注册信息
+  server:
+    enable-self-preservation: false
